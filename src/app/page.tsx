@@ -1,101 +1,125 @@
-import Image from "next/image";
+"use client";
+import SendArea from "@/components/sendArea";
+import * as React from "react";
+import { AiOutlineClear } from "react-icons/ai";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [data, setData] = React.useState<
+    { user: string; aiResponse: string }[]
+  >([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+  const getData = async () => {
+    const res = await fetch("/api/ask-ai", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    setData(data.chat_history);
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  const onClearHistory = async () => {
+    try {
+      setLoading(true);
+      await fetch("/api/reset-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      getData();
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="relative w-full md:w-[810px]">
+      <div className="navbar bg-base-100 shadow-md">
+        <div className="flex-1">
+          <div className="avatar online">
+            <div className="w-10 rounded-full">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt="Tailwind CSS chat bubble component"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCCojhJwl4ekr9pNybO-J3vbA0upG3u7DtBGRrLZXUaIG_x3u72wwvW-Y0ltX-wSjU2uU&usqp=CAU"
+              />
+            </div>
+          </div>
+          <a className="btn btn-ghost text-sm text-black">
+            Dr. Ian (Ganteng Banget)
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="flex-none">
+          <button
+            className="btn btn-square btn-ghost text-slate-600"
+            onClick={onClearHistory}
+          >
+            {loading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              <AiOutlineClear size={24} />
+            )}
+          </button>
+        </div>
+      </div>
+
+      <div className="max-h-[calc(100vh-100px)] overflow-y-scroll pt-8 pb-20">
+        {data?.map((q: { user: string; aiResponse: string }, index: number) => (
+          <div key={index}>
+            <div className={`chat ${q.user ? "chat-end" : "chat-start"}`}>
+              <div className="chat-image avatar ">
+                <div className="w-10 rounded-full">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    alt="Tailwind CSS chat bubble component"
+                    src="https://upload.wikimedia.org/wikipedia/commons/1/13/Pig_icon_05.svg"
+                  />
+                </div>
+              </div>
+              <div
+                className={`chat-bubble ${
+                  q.user ? "bg-green-400" : "bg-slate-200"
+                } text-black`}
+              >
+                {q.user ? q.user : q.aiResponse}
+              </div>
+            </div>
+
+            <div className={`chat ${q.aiResponse ? "chat-start" : "chat-end"}`}>
+              <div className="chat-image avatar ">
+                <div className="w-10 rounded-full">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    alt="Tailwind CSS chat bubble component"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCCojhJwl4ekr9pNybO-J3vbA0upG3u7DtBGRrLZXUaIG_x3u72wwvW-Y0ltX-wSjU2uU&usqp=CAU"
+                  />
+                </div>
+              </div>
+              <div
+                className={`chat-bubble ${
+                  q.aiResponse ? "bg-slate-200" : "bg-green-400"
+                } text-black`}
+              >
+                {q.aiResponse ? q.aiResponse : q.user}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="fixed bottom-1 left-0 right-0 md:w-[810px] mx-auto bg-slate-100 pt-[0px] pb-[10px] md:pb-[30px] px-2">
+        <SendArea fetchData={getData} />
+      </div>
     </div>
   );
 }

@@ -14,5 +14,9 @@ export default {
       },
     },
   },
-  plugins: [],
+  // eslint-disable-next-line
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light"], // Definisikan tema yang tersedia
+  },
 } satisfies Config;
