@@ -17,6 +17,6 @@ export default {
   // eslint-disable-next-line
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light"], // Definisikan tema yang tersedia
+    themes: ["dark"], // Definisikan tema yang tersedia
   },
 } satisfies Config;
