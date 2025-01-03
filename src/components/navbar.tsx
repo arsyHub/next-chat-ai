@@ -11,7 +11,7 @@ export default function Navbar({ fetchData }: { fetchData: () => void }) {
       await fetch("/api/reset-session", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
         },
       });
       fetchData();

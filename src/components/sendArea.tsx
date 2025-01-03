@@ -9,17 +9,21 @@ export default function SendArea({ fetchData }: { fetchData: () => void }) {
   const [message, setMessage] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const notify = () => toast.success("Pesan Baru!");
+  const notify = () => toast.info("Pesan maksimal 500 karakter.");
 
   const onSubmit = async () => {
     if (!message) return;
+    if (message.length > 500) {
+      notify();
+      return;
+    }
 
     try {
       setLoading(true);
       await fetch("/api/ask-ai", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
         },
         body: JSON.stringify({
           prompt: message,
@@ -32,7 +36,10 @@ export default function SendArea({ fetchData }: { fetchData: () => void }) {
       // if (scrollToBottom) {
       //   scrollToBottom.scrollIntoView({ behavior: "smooth" });
       // }
-      notify();
+      // notify();
+
+      const audio = new Audio("/sounds/notif2.mp3");
+      audio.play();
     } catch (error) {
       alert(error);
       console.log(error);

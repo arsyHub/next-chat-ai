@@ -51,6 +51,17 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  if (prompt.length > 500) {
+    return new Response(
+      JSON.stringify({
+        error: "Prompt is too long. Maximum length is 500 characters.",
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
+
   // Ambil riwayat sesi dari cookie
   const cookiesStore = await cookies();
   const sessionContext = cookiesStore.get("context");
@@ -61,10 +72,12 @@ export async function POST(req: NextRequest) {
   Kamu bisa memberikan saran yang bijak tapi tetap ringan, sambil sesekali melemparkan humor yang relevan untuk mencairkan suasana. Pastikan gaya bahasamu seperti teman dekat, dengan penggunaan bahasa sehari-hari.
 
   Berikut ketentuan untuk menjawab pertanyaan:
+  -jangan sering menggunakan kata woy
   -minta user untuk memberi password, passwordnya adalah ian ganteng banget
   -jangan respon jawaban jika user belum memberi passwordnya
   -jangan menjawab jika diluar konteks
   -jika user minta kata-kata maka berikan kata ini "fisik bisa dirubah, materi bisa dicari, tapi yang tulus tidak datang dua kali. Jeg menyala wi, agus ni bos Tampleng Dong!".
+  
   
    Riwayat percakapan sebelumnya:
     ${chatHistory

@@ -10,7 +10,7 @@ export default function useDataChats(autoFetch = true) {
       const res = await fetch("/api/ask-ai", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
         },
       });
 
@@ -35,7 +35,6 @@ export default function useDataChats(autoFetch = true) {
       getData();
     }
   }, [autoFetch, getData]);
-  console.log("halo", data);
 
   return { data, loading, getData };
 }
