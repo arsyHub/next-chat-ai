@@ -35,7 +35,7 @@ export default function Navbar({ fetchData }: { fetchData: () => void }) {
           </div>
         </div>
         <div className="ml-4">
-          <p className="text-sm">Dr. Ian (Ganteng Banget)</p>
+          <p className="text-sm">Kak Ian 😍</p>
           <p className="text-xs text-accent">Online</p>
         </div>
       </div>
