@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex items-center flex-col bg-base-100 overflow-clip">
+      <body className="flex items-center flex-col bg-base-100">
         <ToastContainer position="top-center" autoClose={2000} />
         <div className="w-full lg:w-1/2 relative">{children}</div>
       </body>

@@ -23,7 +23,7 @@ export default function Navbar({ fetchData }: { fetchData: () => void }) {
     }
   };
   return (
-    <nav className="navbar bg-base-200 shadow-sm sticky top-0 w-full z-50">
+    <nav className="navbar bg-base-200 shadow-sm fixed top-0 w-full md:w-[700px] z-50">
       <div className="flex-1">
         <div className="avatar ml-2">
           <div className="ring-accent ring-offset-base-100 w-10 rounded-full ring ring-offset-1">

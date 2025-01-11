@@ -4,22 +4,38 @@ import useDataChats from "./utils/useDataChats";
 import Navbar from "@/components/navbar";
 import SendArea from "@/components/sendArea";
 import ModeChat from "@/components/modeChat";
+import Cookies from "js-cookie";
 
 export default function Home() {
+  const [mode, setMode] = React.useState<string>("");
   const { data, getData } = useDataChats();
+  const modeCookie = Cookies.get("mode_chat");
+
+  const reset = () => {
+    Cookies.remove("mode_chat");
+    getData();
+    setMode("");
+  };
+
+  React.useEffect(() => {
+    if (modeCookie) {
+      setMode(modeCookie);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
 
   return (
-    <div>
-      <Navbar fetchData={getData} />
-      <div className="min-h-screen max-h-screen overflow-auto relative">
+    <div className="h-screen overflow-hidden relative md:w-[700px]">
+      <Navbar fetchData={reset} />
+      <div className="overflow-auto">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-5"
           style={{
             backgroundImage: "url('/images/bg.png')",
           }}
         ></div>
-        {data.length > 0 ? (
-          <div className="pb-52 px-2 pt-5">
+        {data.length > 0 || modeCookie ? (
+          <div className="pb-52 px-2 pt-20">
             {data?.map(
               (q: { user: string; aiResponse: string }, index: number) => (
                 <div key={index}>
@@ -70,8 +86,8 @@ export default function Home() {
             )}
           </div>
         ) : (
-          <div className="flex justify-center items-center h-[500px] ">
-            <ModeChat />
+          <div className="flex justify-center items-center h-[610px]  relative">
+            <ModeChat setterModeChat={setMode} />
           </div>
         )}
       </div>

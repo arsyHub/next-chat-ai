@@ -50,7 +50,7 @@ export default function SendArea({ fetchData }: { fetchData: () => void }) {
 
   return (
     // <div className="bottom-0 pb-3 pt-1 px-2  w-full flex justify-between gap-2 sticky bg-base-100 shadow-xl">
-    <div className="sticky bottom-0  pb-3 pt-1 px-2  w-full flex justify-between gap-2 bg-base-100 shadow-xl">
+    <div className="fixed bottom-0  pb-3 pt-1 px-2 w-full md:w-[700px] flex justify-between gap-2 bg-base-100 shadow-xl">
       <button
         className="btn btn-circle text-2xl shadow-md"
         onClick={() => {
