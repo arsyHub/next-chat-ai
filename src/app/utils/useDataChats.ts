@@ -20,6 +20,9 @@ export default function useDataChats(autoFetch = true) {
 
       const result = await res.json();
       setData(result.chat_history || []);
+
+      const audio = new Audio("/sounds/notif2.mp3");
+      audio.play();
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);

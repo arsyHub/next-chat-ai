@@ -25,7 +25,7 @@ export default function Home() {
   }, [mode]);
 
   return (
-    <div className="h-screen overflow-hidden relative md:w-[700px]">
+    <div className="min-h-screen relative md:w-[700px]">
       <Navbar fetchData={reset} />
       <div className="overflow-auto">
         <div
@@ -45,7 +45,7 @@ export default function Home() {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           alt="Tailwind CSS chat bubble component"
-                          src="/images/avatar4.jpg"
+                          src="/images/avatar3.jpg"
                         />
                       </div>
                     </div>
@@ -80,10 +80,10 @@ export default function Home() {
                       {q.aiResponse ? q.aiResponse : q.user}
                     </div>
                   </div>
-                  <div id="scrollToBottom"></div>
                 </div>
               )
             )}
+            <div id="scrollToBottom" />
           </div>
         ) : (
           <div className="flex justify-center items-center h-[610px]  relative">

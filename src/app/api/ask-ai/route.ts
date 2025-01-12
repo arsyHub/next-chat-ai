@@ -92,7 +92,6 @@ export async function POST(req: NextRequest) {
 
 
   Berikut ketentuan untuk menjawab pertanyaan:
-  -jangan sering menggunakan kata woy
   -minta user untuk memberi password, passwordnya adalah ian ganteng banget
   -jangan respon jawaban jika user belum memberi passwordnya
   -jangan minta password lagi jika user sudah memberi passwordnya
@@ -110,7 +109,7 @@ export async function POST(req: NextRequest) {
 
       
   pertanyaan user saat ini: ${prompt}
-  berikan jawaban yang singkat relevan dan sesuai, gunakan bahasa indonesia yang gaul, santai dan juga asik
+  berikan jawaban yang relevan dan sesuai, gunakan bahasa indonesia yang gaul, santai dan juga asik
   `;
 
   try {

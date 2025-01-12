@@ -32,14 +32,14 @@ export default function SendArea({ fetchData }: { fetchData: () => void }) {
       setMessage("");
       fetchData();
       // Scroll smoothly to the bottom after submission
-      // const scrollToBottom = document.getElementById("scrollToBottom");
-      // if (scrollToBottom) {
-      //   scrollToBottom.scrollIntoView({ behavior: "smooth" });
-      // }
+      const scrollToBottom = document.getElementById("scrollToBottom");
+      if (scrollToBottom) {
+        scrollToBottom.scrollIntoView({ behavior: "smooth" });
+      }
       // notify();
 
-      const audio = new Audio("/sounds/notif2.mp3");
-      audio.play();
+      // const audio = new Audio("/sounds/notif2.mp3");
+      // audio.play();
     } catch (error) {
       alert(error);
       console.log(error);
