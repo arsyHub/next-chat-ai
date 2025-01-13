@@ -109,7 +109,7 @@ export async function POST(req: NextRequest) {
 
       
   pertanyaan user saat ini: ${prompt}
-  berikan jawaban yang relevan dan sesuai, gunakan bahasa indonesia yang gaul, santai dan juga asik
+  berikan jawaban yang singkat, relevan dan sesuai, gunakan bahasa indonesia yang gaul, santai dan juga asik
   `;
 
   try {
