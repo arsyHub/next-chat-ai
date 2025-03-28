@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
 
-export default {
+const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,14 +10,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        // accent: "#3b82f6",
+        // "accent-focus": "#2563eb",
       },
     },
   },
-  // eslint-disable-next-line
-  plugins: [require("daisyui")],
+  plugins: [daisyui],
   daisyui: {
-    themes: ["dark"], // Definisikan tema yang tersedia
+    themes: ["dark"],
   },
-} satisfies Config;
+};
+
+export default config;
